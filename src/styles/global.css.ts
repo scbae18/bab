@@ -18,6 +18,8 @@ globalStyle('body', {
   backgroundColor: colors.gray50,
   color: colors.gray700,
   WebkitFontSmoothing: 'antialiased',
+  WebkitTapHighlightColor: 'rgba(249, 115, 22, 0.12)',
+  overscrollBehavior: 'none',
 })
 
 globalStyle('button', {
@@ -25,6 +27,7 @@ globalStyle('button', {
   cursor: 'pointer',
   border: 'none',
   background: 'none',
+  touchAction: 'manipulation',
 })
 
 globalStyle('input, textarea', {

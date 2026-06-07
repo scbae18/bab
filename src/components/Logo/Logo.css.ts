@@ -8,7 +8,7 @@ export const logoRecipe = recipe({
   },
   variants: {
     size: {
-      sm: { height: '28px', width: 'auto' },
+      sm: { height: '32px', width: 'auto' },
       md: { height: '36px', width: 'auto' },
       lg: { height: '56px', width: 'auto' },
       xl: { height: '80px', width: 'auto' },

@@ -12,6 +12,6 @@ export const shell = style({
 
 export const main = style({
   padding: spacing.contentPadding,
-  paddingBottom: `calc(${spacing.tabBarHeight} + ${spacing.contentPadding})`,
-  minHeight: '100vh',
+  paddingBottom: `calc(${spacing.tabBarHeight} + ${spacing.contentPadding} + env(safe-area-inset-bottom, 0px))`,
+  minHeight: '100dvh',
 })
