@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/Button/Button'
+import { Logo } from '../../components/Logo/Logo'
 import { Chip } from '../../components/Chip/Chip'
 import { Input } from '../../components/Input/Input'
 import { useApp } from '../../context/AppContext'
@@ -11,11 +12,10 @@ import {
   fieldLabel,
   formSection,
   heroSection,
-  logoMark,
+  logoImage,
   neighborhoodGrid,
   page,
   stepLabel,
-  title,
 } from './OnboardingPage.css'
 
 export function OnboardingPage() {
@@ -37,8 +37,7 @@ export function OnboardingPage() {
   return (
     <div className={page}>
       <div className={heroSection}>
-        <div className={logoMark}>밥</div>
-        <h1 className={title}>밥친구</h1>
+        <Logo size="xl" className={logoImage} />
         <p className={description}>
           혼자 가기 애매한 식당,
           <br />

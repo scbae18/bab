@@ -11,7 +11,8 @@ export const buttonBase = style({
   fontWeight: '600',
   border: 'none',
   cursor: 'pointer',
-  transition: 'background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease',
+  transition:
+    'background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.15s ease',
   ':disabled': {
     cursor: 'not-allowed',
     backgroundColor: colors.gray300,
@@ -26,8 +27,17 @@ export const buttonRecipe = recipe({
       primary: {
         backgroundColor: colors.primary500,
         color: colors.white,
-        ':hover:not(:disabled)': { backgroundColor: colors.primary600 },
-        ':active:not(:disabled)': { backgroundColor: colors.primary700 },
+        boxShadow: '0 2px 8px rgba(249, 115, 22, 0.25)',
+        ':hover:not(:disabled)': {
+          backgroundColor: colors.primary600,
+          boxShadow: '0 4px 14px rgba(249, 115, 22, 0.35)',
+          transform: 'translateY(-1px)',
+        },
+        ':active:not(:disabled)': {
+          backgroundColor: colors.primary700,
+          transform: 'scale(0.97) translateY(0)',
+          boxShadow: '0 1px 4px rgba(249, 115, 22, 0.2)',
+        },
       },
       secondary: {
         backgroundColor: colors.primary100,

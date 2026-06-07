@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css'
+import { fadeInUpItem } from '../../styles/animations.css'
 import { colors, radius, spacing, typography } from '../../styles/tokens.css'
 
 export const header = style({
@@ -37,19 +38,27 @@ export const list = style({
   gap: '8px',
 })
 
-export const notifItem = style({
-  display: 'flex',
-  gap: '12px',
-  padding: '14px',
-  borderRadius: radius.md,
-  backgroundColor: colors.white,
-  border: `1px solid ${colors.gray100}`,
-  cursor: 'pointer',
-  transition: 'background-color 0.15s ease',
-  ':hover': {
-    backgroundColor: colors.primary50,
+export const notifItem = style([
+  fadeInUpItem,
+  {
+    display: 'flex',
+    gap: '12px',
+    padding: '14px',
+    borderRadius: radius.md,
+    backgroundColor: colors.white,
+    border: `1px solid ${colors.gray100}`,
+    cursor: 'pointer',
+    transition:
+      'background-color 0.2s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1)',
+    ':hover': {
+      backgroundColor: colors.primary50,
+      transform: 'translateX(4px)',
+    },
+    ':active': {
+      transform: 'scale(0.98)',
+    },
   },
-})
+])
 
 export const notifUnread = style({
   backgroundColor: colors.primary50,

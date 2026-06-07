@@ -1,17 +1,22 @@
 import { style } from '@vanilla-extract/css'
+import {
+  fadeInDownItem,
+  fadeInUp,
+  fadeInUpItem,
+  pulseItem,
+  shimmer,
+} from '../../styles/animations.css'
 import { colors, radius, spacing, typography } from '../../styles/tokens.css'
 
-export const header = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: '16px',
-})
-
-export const logo = style({
-  ...typography.headingMd,
-  color: colors.primary500,
-})
+export const header = style([
+  fadeInDownItem,
+  {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '16px',
+  },
+])
 
 export const headerRight = style({
   display: 'flex',
@@ -41,22 +46,31 @@ export const bellButton = style({
   cursor: 'pointer',
 })
 
-export const bellBadge = style({
-  position: 'absolute',
-  top: '4px',
-  right: '4px',
-  width: '8px',
-  height: '8px',
-  borderRadius: '50%',
-  backgroundColor: colors.primary500,
-  border: `2px solid ${colors.white}`,
-})
+export const bellBadge = style([
+  pulseItem,
+  {
+    position: 'absolute',
+    top: '4px',
+    right: '4px',
+    width: '8px',
+    height: '8px',
+    borderRadius: '50%',
+    backgroundColor: colors.primary500,
+    border: `2px solid ${colors.white}`,
+  },
+])
 
-export const searchSection = style({
-  marginBottom: '16px',
-})
+export const searchSection = style([
+  fadeInUpItem,
+  {
+    marginBottom: '16px',
+    animationDelay: '0.05s',
+  },
+])
 
 export const statsBanner = style({
+  position: 'relative',
+  overflow: 'hidden',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -64,6 +78,21 @@ export const statsBanner = style({
   borderRadius: radius.md,
   padding: '14px 16px',
   marginBottom: spacing.sectionGap,
+  animation: `${fadeInUp} 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards`,
+  animationDelay: '0.1s',
+  opacity: 0,
+  '::after': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '50%',
+    height: '100%',
+    background:
+      'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+    animation: `${shimmer} 3s ease-in-out infinite`,
+    animationDelay: '1s',
+  },
 })
 
 export const statsText = style({
@@ -131,6 +160,17 @@ export const popularCard = style({
   flexShrink: 0,
 })
 
-export const sectionBlock = style({
-  marginBottom: spacing.sectionGap,
-})
+export const sectionBlock = style([
+  fadeInUpItem,
+  {
+    marginBottom: spacing.sectionGap,
+    animationDelay: '0.15s',
+  },
+])
+
+export const filterSectionAnimated = style([
+  fadeInUpItem,
+  {
+    animationDelay: '0.2s',
+  },
+])

@@ -1,5 +1,8 @@
 import { style } from '@vanilla-extract/css'
+import { fadeInUpItem } from '../../styles/animations.css'
 import { colors, typography } from '../../styles/tokens.css'
+
+export const cardWrapper = style([fadeInUpItem])
 
 export const cardInner = style({
   display: 'flex',

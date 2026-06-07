@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { EmptyState } from '../../components/EmptyState/EmptyState'
 import { Icon } from '../../components/Icon/Icon'
 import { useApp } from '../../context/AppContext'
+import { staggerDelay } from '../../utils/animation'
 import { formatRelativeTime } from '../../utils/format'
 import {
   backButton,
@@ -62,10 +63,11 @@ export function NotificationsPage() {
             titleText="알림이 없어요"
           />
         ) : (
-          notifications.map((notif) => (
+          notifications.map((notif, i) => (
             <div
               key={notif.id}
               className={`${notifItem}${!notif.read ? ` ${notifUnread}` : ''}`}
+              style={{ animationDelay: staggerDelay(i) }}
               onClick={() => handleClick(notif.id, notif.postId)}
               role="button"
               tabIndex={0}

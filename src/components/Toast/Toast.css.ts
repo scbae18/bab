@@ -1,9 +1,19 @@
 import { keyframes, style } from '@vanilla-extract/css'
 import { colors, elevation, radius, typography } from '../../styles/tokens.css'
 
-const slideDown = keyframes({
-  '0%': { opacity: 0, transform: 'translateX(-50%) translateY(-12px)' },
-  '100%': { opacity: 1, transform: 'translateX(-50%) translateY(0)' },
+const toastIn = keyframes({
+  '0%': {
+    opacity: 0,
+    transform: 'translateX(-50%) translateY(-20px) scale(0.9)',
+  },
+  '60%': {
+    opacity: 1,
+    transform: 'translateX(-50%) translateY(4px) scale(1.02)',
+  },
+  '100%': {
+    opacity: 1,
+    transform: 'translateX(-50%) translateY(0) scale(1)',
+  },
 })
 
 export const toast = style({
@@ -19,8 +29,7 @@ export const toast = style({
   fontSize: typography.bodyMd.fontSize,
   fontWeight: typography.bodyMd.fontWeight,
   boxShadow: elevation.toast,
-  animation: `${slideDown} 0.25s ease forwards`,
+  animation: `${toastIn} 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards`,
   maxWidth: 'calc(430px - 40px)',
   textAlign: 'center',
-  whiteSpace: 'nowrap',
 })

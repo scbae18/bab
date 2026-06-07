@@ -1,16 +1,22 @@
 import { style } from '@vanilla-extract/css'
+import { fadeInUpItem, scaleInItem } from '../../styles/animations.css'
 import { colors, radius, spacing, typography } from '../../styles/tokens.css'
 
-export const profileCard = style({
-  display: 'flex',
-  gap: '16px',
-  alignItems: 'center',
-  backgroundColor: colors.white,
-  border: `1px solid ${colors.gray100}`,
-  borderRadius: radius.md,
-  padding: '20px',
-  marginBottom: spacing.sectionGap,
-})
+export const profileCard = style([
+  scaleInItem,
+  {
+    display: 'flex',
+    gap: '16px',
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    border: `1px solid ${colors.gray100}`,
+    borderRadius: radius.md,
+    padding: '20px',
+    marginBottom: spacing.sectionGap,
+  },
+])
+
+export const listItemAnimated = style([fadeInUpItem])
 
 export const profileInfo = style({
   flex: 1,

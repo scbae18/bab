@@ -1,4 +1,9 @@
 import { style } from '@vanilla-extract/css'
+import {
+  fadeInUpItem,
+  pageEnter,
+  slideUpCentered,
+} from '../../styles/animations.css'
 import { colors, radius, spacing, typography } from '../../styles/tokens.css'
 
 export const topBar = style({
@@ -238,7 +243,6 @@ export const stickyFooter = style({
   position: 'fixed',
   bottom: 0,
   left: '50%',
-  transform: 'translateX(-50%)',
   width: '100%',
   maxWidth: '430px',
   padding: '12px 20px',
@@ -246,7 +250,11 @@ export const stickyFooter = style({
   backgroundColor: colors.white,
   borderTop: `1px solid ${colors.gray100}`,
   zIndex: 50,
+  boxShadow: '0 -4px 20px rgba(0,0,0,0.06)',
+  animation: `${slideUpCentered} 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards`,
 })
+
+export const animateSection = style([fadeInUpItem])
 
 export const footerSpacer = style({
   height: '80px',
@@ -259,7 +267,10 @@ export const notFound = style({
   padding: '40px 0',
 })
 
-export const detailMain = style({
-  padding: spacing.contentPadding,
-  minHeight: '100vh',
-})
+export const detailMain = style([
+  pageEnter,
+  {
+    padding: spacing.contentPadding,
+    minHeight: '100vh',
+  },
+])

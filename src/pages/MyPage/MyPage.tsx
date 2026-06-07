@@ -8,10 +8,12 @@ import { EmptyState } from '../../components/EmptyState/EmptyState'
 import { Icon } from '../../components/Icon/Icon'
 import { TabPills } from '../../components/TabPills/TabPills'
 import { useApp } from '../../context/AppContext'
+import { staggerDelay } from '../../utils/animation'
 import { formatRelativeTime } from '../../utils/format'
 import {
   closeButton,
   list,
+  listItemAnimated,
   matchCardInner,
   matchFooter,
   matchHeader,
@@ -87,11 +89,13 @@ export function MyPage() {
               descriptionText="마음에 드는 모집글에 같이 먹을래요를 눌러보세요"
             />
           ) : (
-            matches.map((match) => (
-              <Card
+            matches.map((match, i) => (
+              <div
                 key={match.id}
-                onClick={() => navigate(`/post/${match.postId}`)}
+                className={listItemAnimated}
+                style={{ animationDelay: staggerDelay(i) }}
               >
+              <Card onClick={() => navigate(`/post/${match.postId}`)}>
                 <div className={matchCardInner}>
                   <div className={matchHeader}>
                     <div className={matchMenu}>
@@ -118,6 +122,7 @@ export function MyPage() {
                   </div>
                 </div>
               </Card>
+              </div>
             ))
           )
         ) : myPosts.length === 0 ? (
@@ -127,8 +132,13 @@ export function MyPage() {
             descriptionText="글쓰기 탭에서 첫 모집글을 작성해보세요"
           />
         ) : (
-          myPosts.map((post) => (
-            <Card key={post.id} onClick={() => navigate(`/post/${post.id}`)}>
+          myPosts.map((post, i) => (
+            <div
+              key={post.id}
+              className={listItemAnimated}
+              style={{ animationDelay: staggerDelay(i) }}
+            >
+            <Card onClick={() => navigate(`/post/${post.id}`)}>
               <div className={matchCardInner}>
                 <div className={matchHeader}>
                   <div className={matchMenu}>
@@ -162,6 +172,7 @@ export function MyPage() {
                 )}
               </div>
             </Card>
+            </div>
           ))
         )}
       </div>

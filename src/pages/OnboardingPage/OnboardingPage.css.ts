@@ -1,5 +1,10 @@
 import { style } from '@vanilla-extract/css'
-import { colors, radius, spacing, typography } from '../../styles/tokens.css'
+import {
+  fadeInUpItem,
+  floatItem,
+  scaleInItem,
+} from '../../styles/animations.css'
+import { colors, spacing, typography } from '../../styles/tokens.css'
 
 export const page = style({
   minHeight: '100vh',
@@ -20,37 +25,35 @@ export const heroSection = style({
   paddingTop: '40px',
 })
 
-export const logoMark = style({
-  width: '72px',
-  height: '72px',
-  borderRadius: radius.lg,
-  background: `linear-gradient(135deg, ${colors.primary100} 0%, ${colors.accent50} 100%)`,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: colors.primary500,
-  fontSize: '32px',
-  fontWeight: '700',
-})
+export const logoImage = style([
+  scaleInItem,
+  floatItem,
+  {
+    animationDelay: '0.05s',
+  },
+])
 
-export const title = style({
-  ...typography.display,
-  color: colors.gray900,
-})
+export const description = style([
+  fadeInUpItem,
+  {
+    ...typography.bodyLg,
+    color: colors.gray500,
+    lineHeight: typography.lineHeight,
+    maxWidth: '280px',
+    animationDelay: '0.2s',
+  },
+])
 
-export const description = style({
-  ...typography.bodyLg,
-  color: colors.gray500,
-  lineHeight: typography.lineHeight,
-  maxWidth: '280px',
-})
-
-export const formSection = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: spacing.sectionGap,
-  paddingBottom: '32px',
-})
+export const formSection = style([
+  fadeInUpItem,
+  {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: spacing.sectionGap,
+    paddingBottom: '32px',
+    animationDelay: '0.3s',
+  },
+])
 
 export const stepLabel = style({
   ...typography.labelSm,

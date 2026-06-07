@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Chip } from '../../components/Chip/Chip'
+import { Logo } from '../../components/Logo/Logo'
 import { Icon } from '../../components/Icon/Icon'
 import { PostCard } from '../../components/PostCard/PostCard'
 import { SearchBar } from '../../components/SearchBar/SearchBar'
@@ -12,10 +13,10 @@ import {
   bellButton,
   filterRow,
   filterSection,
+  filterSectionAnimated,
   header,
   headerRight,
   location,
-  logo,
   popularCard,
   popularScroll,
   postCount,
@@ -84,7 +85,7 @@ export function HomePage() {
   return (
     <div>
       <header className={header}>
-        <h1 className={logo}>밥친구</h1>
+        <Logo size="sm" />
         <div className={headerRight}>
           <span className={location}>
             <Icon name="mapPin" size={14} />
@@ -117,11 +118,12 @@ export function HomePage() {
         <div className={sectionBlock}>
           <SectionHeader titleText="지금 인기" subtitleText="빠르게 마감될 수 있어요" />
           <div className={popularScroll}>
-            {popularPosts.map((post) => (
+            {popularPosts.map((post, i) => (
               <div key={post.id} className={popularCard}>
                 <PostCard
                   post={post}
                   compact
+                  animationIndex={i}
                   onClick={() => navigate(`/post/${post.id}`)}
                 />
               </div>
@@ -130,7 +132,7 @@ export function HomePage() {
         </div>
       )}
 
-      <div className={filterSection}>
+      <div className={`${filterSection} ${filterSectionAnimated}`}>
         <SectionHeader titleText="모집 둘러보기" />
         <div className={filterRow}>
           {FILTERS.map((filter) => (
@@ -163,10 +165,11 @@ export function HomePage() {
             조건에 맞는 모집글이 없어요
           </p>
         ) : (
-          filteredPosts.map((post) => (
+          filteredPosts.map((post, i) => (
             <PostCard
               key={post.id}
               post={post}
+              animationIndex={i}
               onClick={() => navigate(`/post/${post.id}`)}
             />
           ))

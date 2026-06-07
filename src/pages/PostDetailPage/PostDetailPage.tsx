@@ -8,8 +8,10 @@ import { PostCard } from '../../components/PostCard/PostCard'
 import { SectionHeader } from '../../components/SectionHeader/SectionHeader'
 import { Tag } from '../../components/Tag/Tag'
 import { useApp } from '../../context/AppContext'
+import { staggerDelay } from '../../utils/animation'
 import { formatBudget } from '../../utils/format'
 import {
+  animateSection,
   applicantAvatars,
   applicantText,
   applicantsRow,
@@ -98,7 +100,10 @@ export function PostDetailPage() {
         </button>
       </div>
 
-      <div className={titleSection}>
+      <div
+        className={`${titleSection} ${animateSection}`}
+        style={{ animationDelay: staggerDelay(0) }}
+      >
         <h1 className={menuTitle}>
           <CategoryIcon category={post.category} size="lg" />
           {post.menu}
@@ -112,12 +117,18 @@ export function PostDetailPage() {
         </div>
       </div>
 
-      <div className={restaurantCard}>
+      <div
+        className={`${restaurantCard} ${animateSection}`}
+        style={{ animationDelay: staggerDelay(1) }}
+      >
         <p className={restaurantAddress}>{post.address}</p>
         <span className={minOrderBadge}>{post.minOrder}</span>
       </div>
 
-      <div className={hostCard}>
+      <div
+        className={`${hostCard} ${animateSection}`}
+        style={{ animationDelay: staggerDelay(2) }}
+      >
         <Avatar nickname={post.nickname} size="lg" />
         <div className={hostInfo}>
           <p className={hostName}>{post.nickname}</p>
@@ -133,7 +144,10 @@ export function PostDetailPage() {
         </div>
       </div>
 
-      <div className={infoGrid}>
+      <div
+        className={`${infoGrid} ${animateSection}`}
+        style={{ animationDelay: staggerDelay(3) }}
+      >
         <div className={infoBox}>
           <p className={infoBoxLabel}>일시</p>
           <p className={infoBoxValue}>
@@ -165,7 +179,10 @@ export function PostDetailPage() {
       )}
 
       {post.comment && (
-        <div className={speechBubble}>
+        <div
+          className={`${speechBubble} ${animateSection}`}
+          style={{ animationDelay: staggerDelay(4) }}
+        >
           <p className={speechBubbleText}>{post.comment}</p>
           <div className={speechBubbleTail} />
         </div>
@@ -202,11 +219,12 @@ export function PostDetailPage() {
         <div className={similarSection}>
           <SectionHeader titleText="비슷한 모집글" />
           <div className={similarList}>
-            {similarPosts.map((p) => (
+            {similarPosts.map((p, i) => (
               <PostCard
                 key={p.id}
                 post={p}
                 compact
+                animationIndex={i}
                 onClick={() => navigate(`/post/${p.id}`)}
               />
             ))}

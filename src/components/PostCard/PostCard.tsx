@@ -6,11 +6,13 @@ import { CategoryIcon } from '../CategoryIcon/CategoryIcon'
 import { Chip } from '../Chip/Chip'
 import { Icon } from '../Icon/Icon'
 import { Tag } from '../Tag/Tag'
+import { staggerDelay } from '../../utils/animation'
 import {
   authorName,
   authorRow,
   bottomRow,
   cardInner,
+  cardWrapper,
   menuInfo,
   menuName,
   menuRow,
@@ -28,10 +30,20 @@ interface PostCardProps {
   post: Post
   onClick: () => void
   compact?: boolean
+  animationIndex?: number
 }
 
-export function PostCard({ post, onClick, compact = false }: PostCardProps) {
+export function PostCard({
+  post,
+  onClick,
+  compact = false,
+  animationIndex = 0,
+}: PostCardProps) {
   return (
+    <div
+      className={cardWrapper}
+      style={{ animationDelay: staggerDelay(animationIndex) }}
+    >
     <Card onClick={onClick}>
       <div className={cardInner}>
         <div className={topRow}>
@@ -91,5 +103,6 @@ export function PostCard({ post, onClick, compact = false }: PostCardProps) {
         </div>
       </div>
     </Card>
+    </div>
   )
 }
