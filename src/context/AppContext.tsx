@@ -26,6 +26,7 @@ import {
 
 interface CreatePostInput {
   category: Category
+  categoryLabel: string
   menu: string
   restaurant: string
   location: string
@@ -117,6 +118,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const newPost: Post = {
         id: nextPostId,
         category: input.category,
+        categoryLabel: input.categoryLabel,
         menu: input.menu,
         restaurant: input.restaurant,
         location: input.location,

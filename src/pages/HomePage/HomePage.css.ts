@@ -18,6 +18,11 @@ export const header = style([
   },
 ])
 
+export const logo = style({
+  ...typography.headingMd,
+  color: colors.primary500,
+})
+
 export const headerRight = style({
   display: 'flex',
   alignItems: 'center',

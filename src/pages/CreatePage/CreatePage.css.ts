@@ -100,6 +100,16 @@ export const peopleButtonActive = style({
   fontWeight: '600',
 })
 
+export const peopleCustomWrap = style({
+  marginTop: '8px',
+})
+
+export const helperText = style({
+  ...typography.labelSm,
+  color: colors.gray500,
+  marginTop: '4px',
+})
+
 export const previewCard = style({
   backgroundColor: colors.primary50,
   borderRadius: radius.md,

@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Chip } from '../../components/Chip/Chip'
-import { Logo } from '../../components/Logo/Logo'
 import { Icon } from '../../components/Icon/Icon'
 import { PostCard } from '../../components/PostCard/PostCard'
 import { SearchBar } from '../../components/SearchBar/SearchBar'
@@ -17,6 +16,7 @@ import {
   header,
   headerRight,
   location,
+  logo,
   popularCard,
   popularScroll,
   postCount,
@@ -85,7 +85,7 @@ export function HomePage() {
   return (
     <div>
       <header className={header}>
-        <Logo size="sm" />
+        <h1 className={logo}>밥친구</h1>
         <div className={headerRight}>
           <span className={location}>
             <Icon name="mapPin" size={14} />

@@ -1,9 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import {
-  fadeInUpItem,
-  floatItem,
-  scaleInItem,
-} from '../../styles/animations.css'
+import { fadeInUpItem, scaleInItem } from '../../styles/animations.css'
 import { colors, spacing, typography } from '../../styles/tokens.css'
 
 export const page = style({
@@ -25,10 +21,11 @@ export const heroSection = style({
   paddingTop: '40px',
 })
 
-export const logoImage = style([
+export const title = style([
   scaleInItem,
-  floatItem,
   {
+    ...typography.display,
+    color: colors.primary500,
     animationDelay: '0.05s',
   },
 ])

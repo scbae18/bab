@@ -13,6 +13,7 @@ export interface AuthorProfile {
 export interface Post {
   id: number
   category: Category
+  categoryLabel: string
   menu: string
   restaurant: string
   location: string
@@ -68,6 +69,7 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 1,
     category: '고기',
+    categoryLabel: '고기',
     menu: '삼겹살',
     restaurant: '연돈',
     location: '망포동',
@@ -96,6 +98,7 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 2,
     category: '곱창',
+    categoryLabel: '곱창',
     menu: '곱창구이',
     restaurant: '곱창골목',
     location: '수원역',
@@ -124,6 +127,7 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 3,
     category: '찜닭',
+    categoryLabel: '찜닭',
     menu: '안동찜닭',
     restaurant: '안동찜닭',
     location: '영통',
@@ -151,6 +155,7 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 4,
     category: '고기',
+    categoryLabel: '고기',
     menu: '소고기 구이',
     restaurant: '이차돌',
     location: '광교',
@@ -178,6 +183,7 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 5,
     category: '곱창',
+    categoryLabel: '곱창',
     menu: '대창+막창',
     restaurant: '망원곱창',
     location: '망포동',
@@ -206,6 +212,7 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 6,
     category: '고기',
+    categoryLabel: '고기',
     menu: 'LA갈비',
     restaurant: '영통고기집',
     location: '영통',
@@ -233,6 +240,7 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 7,
     category: '기타',
+    categoryLabel: '기타',
     menu: '치킨+맥주',
     restaurant: 'BHC 치킨',
     location: '영통',
@@ -260,6 +268,7 @@ export const INITIAL_POSTS: Post[] = [
   {
     id: 8,
     category: '찜닭',
+    categoryLabel: '찜닭',
     menu: '간장찜닭',
     restaurant: '할머니찜닭',
     location: '망포동',
@@ -342,6 +351,14 @@ export const INITIAL_NOTIFICATIONS: Notification[] = [
 ]
 
 export const CATEGORIES: Category[] = ['고기', '곱창', '찜닭', '기타']
+
+export function resolveCategory(label: string): Category {
+  const trimmed = label.trim()
+  if ((CATEGORIES as readonly string[]).includes(trimmed)) {
+    return trimmed as Category
+  }
+  return '기타'
+}
 
 export const CREATE_TAGS = [
   '첫만남 환영',

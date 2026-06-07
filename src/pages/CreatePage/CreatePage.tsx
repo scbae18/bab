@@ -4,16 +4,23 @@ import { Button } from '../../components/Button/Button'
 import { Chip } from '../../components/Chip/Chip'
 import { Input, Textarea } from '../../components/Input/Input'
 import { useApp } from '../../context/AppContext'
-import { CREATE_TAGS, CATEGORIES, type Category } from '../../data/mockData'
+import {
+  CREATE_TAGS,
+  CATEGORIES,
+  resolveCategory,
+  type Category,
+} from '../../data/mockData'
 import { RESTAURANT_SUGGESTIONS } from '../../data/restaurants'
-import { formatBudget } from '../../utils/format'
+import { formatBudget, formatMeetDate, todayISO } from '../../utils/format'
 import {
   categoryRow,
   form,
+  helperText,
   pageSubtitle,
   pageTitle,
   peopleButton,
   peopleButtonActive,
+  peopleCustomWrap,
   peopleRow,
   previewCard,
   previewLabel,
@@ -28,31 +35,43 @@ import {
   tagRow,
 } from './CreatePage.css'
 
-const DATE_OPTIONS = [
-  { value: '오늘', label: '오늘' },
-  { value: '내일', label: '내일' },
-  { value: '모레', label: '모레' },
-]
-
 const BUDGET_OPTIONS = [15000, 20000, 25000, 30000, 35000, 40000, 50000]
+
+type PeopleMode = 2 | 3 | 'custom'
 
 export function CreatePage() {
   const { addPost } = useApp()
   const navigate = useNavigate()
 
-  const [category, setCategory] = useState<Category | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
+  const [customCategory, setCustomCategory] = useState('')
   const [menu, setMenu] = useState('')
   const [restaurant, setRestaurant] = useState('')
   const [location, setLocation] = useState('')
   const [address, setAddress] = useState('')
   const [minOrder, setMinOrder] = useState('')
-  const [date, setDate] = useState('오늘')
+  const [date, setDate] = useState(todayISO)
   const [time, setTime] = useState('')
   const [budget, setBudget] = useState(30000)
-  const [maxPeople, setMaxPeople] = useState(2)
+  const [peopleMode, setPeopleMode] = useState<PeopleMode>(2)
+  const [customPeople, setCustomPeople] = useState('4')
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [comment, setComment] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
+
+  const categoryLabel = customCategory.trim() || selectedCategory || ''
+  const category = categoryLabel ? resolveCategory(categoryLabel) : null
+  const displayDate = formatMeetDate(date)
+
+  const maxPeople = useMemo(() => {
+    if (peopleMode === 'custom') {
+      return parseInt(customPeople, 10) || 0
+    }
+    return peopleMode
+  }, [peopleMode, customPeople])
+
+  const isPeopleValid =
+    peopleMode !== 'custom' || (maxPeople >= 4 && maxPeople <= 30)
 
   const restaurantSuggestions = useMemo(() => {
     if (!restaurant.trim()) return []
@@ -67,6 +86,11 @@ export function CreatePage() {
     )
   }
 
+  const selectCategoryChip = (cat: Category) => {
+    setSelectedCategory(cat)
+    setCustomCategory('')
+  }
+
   const selectRestaurant = (name: string) => {
     const found = RESTAURANT_SUGGESTIONS.find((r) => r.name === name)
     if (found) {
@@ -75,7 +99,7 @@ export function CreatePage() {
       setAddress(found.address)
       setMinOrder(found.minOrder)
       setBudget(found.avgBudget)
-      setCategory(found.category as Category)
+      selectCategoryChip(found.category as Category)
       if (!menu) setMenu(found.category === '고기' ? '삼겹살' : found.category)
     }
     setShowSuggestions(false)
@@ -83,10 +107,14 @@ export function CreatePage() {
 
   const isValid =
     category !== null &&
+    categoryLabel !== '' &&
     menu.trim() !== '' &&
     restaurant.trim() !== '' &&
     location.trim() !== '' &&
-    time !== ''
+    date !== '' &&
+    time !== '' &&
+    isPeopleValid &&
+    maxPeople >= 2
 
   const handleSubmit = () => {
     if (!isValid || category === null) return
@@ -96,11 +124,12 @@ export function CreatePage() {
 
     addPost({
       category,
+      categoryLabel,
       menu: menu.trim(),
       restaurant: restaurant.trim(),
       location: location.trim(),
       address: address.trim() || `${location} 일대`,
-      date,
+      date: displayDate,
       time,
       budget,
       maxPeople,
@@ -130,13 +159,30 @@ export function CreatePage() {
             {CATEGORIES.map((cat) => (
               <Chip
                 key={cat}
-                variant={category === cat ? 'categoryActive' : 'category'}
-                onClick={() => setCategory(cat)}
+                variant={
+                  selectedCategory === cat && !customCategory.trim()
+                    ? 'categoryActive'
+                    : 'category'
+                }
+                onClick={() => selectCategoryChip(cat)}
               >
                 {cat}
               </Chip>
             ))}
           </div>
+          <Input
+            placeholder="직접 입력 (예) 회, 파스타, 횟집..."
+            value={customCategory}
+            onChange={(e) => {
+              setCustomCategory(e.target.value)
+              if (e.target.value.trim()) setSelectedCategory(null)
+            }}
+          />
+          {customCategory.trim() && (
+            <span className={helperText}>
+              '{customCategory.trim()}' 카테고리로 등록돼요
+            </span>
+          )}
         </div>
 
         <Input
@@ -185,17 +231,13 @@ export function CreatePage() {
 
         <div className={section}>
           <span className={sectionTitle}>언제 만날까요?</span>
-          <div className={categoryRow}>
-            {DATE_OPTIONS.map((d) => (
-              <Chip
-                key={d.value}
-                variant={date === d.value ? 'categoryActive' : 'category'}
-                onClick={() => setDate(d.value)}
-              >
-                {d.label}
-              </Chip>
-            ))}
-          </div>
+          <Input
+            labelText="날짜"
+            type="date"
+            value={date}
+            min={todayISO()}
+            onChange={(e) => setDate(e.target.value)}
+          />
           <Input
             labelText="시간"
             type="time"
@@ -222,17 +264,38 @@ export function CreatePage() {
         <div className={section}>
           <span className={sectionTitle}>몇 명이서 갈까요?</span>
           <div className={peopleRow}>
-            {[2, 3].map((n) => (
+            {([2, 3] as const).map((n) => (
               <button
                 key={n}
                 type="button"
-                className={`${peopleButton}${maxPeople === n ? ` ${peopleButtonActive}` : ''}`}
-                onClick={() => setMaxPeople(n)}
+                className={`${peopleButton}${peopleMode === n ? ` ${peopleButtonActive}` : ''}`}
+                onClick={() => setPeopleMode(n)}
               >
                 {n}명
               </button>
             ))}
+            <button
+              type="button"
+              className={`${peopleButton}${peopleMode === 'custom' ? ` ${peopleButtonActive}` : ''}`}
+              onClick={() => setPeopleMode('custom')}
+            >
+              4명 이상
+            </button>
           </div>
+          {peopleMode === 'custom' && (
+            <div className={peopleCustomWrap}>
+              <Input
+                labelText="인원 수"
+                type="number"
+                min={4}
+                max={30}
+                placeholder="4"
+                value={customPeople}
+                onChange={(e) => setCustomPeople(e.target.value)}
+              />
+              <span className={helperText}>4명 이상 직접 입력해주세요</span>
+            </div>
+          )}
         </div>
 
         <div className={section}>
@@ -264,7 +327,8 @@ export function CreatePage() {
               {menu} · {restaurant}
             </p>
             <p className={previewMeta}>
-              {date} {time} · {location} · {formatBudget(budget)} · {maxPeople}명
+              {categoryLabel} · {displayDate} {time} · {location} ·{' '}
+              {formatBudget(budget)} · {maxPeople}명
             </p>
           </div>
         )}
