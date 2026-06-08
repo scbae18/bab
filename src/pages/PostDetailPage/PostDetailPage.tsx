@@ -1,11 +1,10 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Avatar } from '../../components/Avatar/Avatar'
 import { Button } from '../../components/Button/Button'
 import { CategoryIcon } from '../../components/CategoryIcon/CategoryIcon'
 import { Icon } from '../../components/Icon/Icon'
 import { PostCard } from '../../components/PostCard/PostCard'
-import { SectionHeader } from '../../components/SectionHeader/SectionHeader'
 import { Tag } from '../../components/Tag/Tag'
 import { useApp } from '../../context/AppContext'
 import { staggerDelay } from '../../utils/animation'
@@ -18,8 +17,10 @@ import {
   backButton,
   footerSpacer,
   guidelineCard,
+  guidelineCardCollapsed,
   guidelineList,
   guidelineTitle,
+  guidelineToggle,
   hostCard,
   hostInfo,
   hostIntro,
@@ -39,13 +40,13 @@ import {
   restaurantCard,
   restaurantName,
   restaurantRow,
-  shareButton,
   similarList,
   similarSection,
   speechBubble,
   speechBubbleTail,
   speechBubbleText,
   stickyFooter,
+  stickyFooterActions,
   tagRow,
   titleSection,
   topBar,
@@ -53,23 +54,24 @@ import {
 
 export function PostDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { posts, matches, profile, applyMatch, showToast } = useApp()
+  const { posts, matches, profile, applyMatch, closePost, showToast } = useApp()
   const navigate = useNavigate()
+  const [guidelineOpen, setGuidelineOpen] = useState(false)
 
   const post = posts.find((p) => p.id === Number(id))
   const hasApplied = matches.some((m) => m.postId === post?.id)
   const isMyPost = post?.nickname === profile.nickname
 
-  const similarPosts = useMemo(() => {
-    if (!post) return []
-    return posts
-      .filter(
+  const similarPost = useMemo(() => {
+    if (!post) return null
+    return (
+      posts.find(
         (p) =>
           p.id !== post.id &&
           p.category === post.category &&
           p.status === 'waiting',
-      )
-      .slice(0, 2)
+      ) ?? null
+    )
   }, [posts, post])
 
   if (!post) {
@@ -84,8 +86,10 @@ export function PostDetailPage() {
     )
   }
 
-  const handleShare = () => {
-    showToast('링크가 복사됐어요')
+  const handleClosePost = () => {
+    closePost(post.id)
+    showToast('모집글이 마감됐어요')
+    navigate('/my')
   }
 
   return (
@@ -94,9 +98,6 @@ export function PostDetailPage() {
         <button className={backButton} onClick={() => navigate(-1)}>
           <Icon name="arrowLeft" size={16} />
           돌아가기
-        </button>
-        <button type="button" className={shareButton} onClick={handleShare}>
-          <Icon name="share" size={16} />
         </button>
       </div>
 
@@ -203,31 +204,39 @@ export function PostDetailPage() {
         </div>
       )}
 
-      <div className={guidelineCard}>
-        <p className={guidelineTitle}>
-          <Icon name="info" size={16} />
-          밥친구 이용 안내
-        </p>
-        <ul className={guidelineList}>
-          <li>첫 만남은 사람 많은 곳에서 만나요</li>
-          <li>약속 시간을 꼭 지켜주세요</li>
-          <li>비용은 각자 부담 (더치페이) 기본이에요</li>
-        </ul>
+      <div className={guidelineCardCollapsed}>
+        <button
+          type="button"
+          className={guidelineToggle}
+          onClick={() => setGuidelineOpen((v) => !v)}
+          aria-expanded={guidelineOpen}
+        >
+          <span className={guidelineTitle}>
+            <Icon name="info" size={16} />
+            안전하게 이용하기
+          </span>
+          <Icon name="chevronRight" size={16} />
+        </button>
+        {guidelineOpen && (
+          <div className={guidelineCard}>
+            <ul className={guidelineList}>
+              <li>첫 만남은 사람 많은 곳에서 만나요</li>
+              <li>약속 시간을 꼭 지켜주세요</li>
+              <li>비용은 각자 부담 (더치페이) 기본이에요</li>
+            </ul>
+          </div>
+        )}
       </div>
 
-      {similarPosts.length > 0 && (
+      {similarPost && (
         <div className={similarSection}>
-          <SectionHeader titleText="비슷한 모집글" />
+          <p className={guidelineTitle}>비슷한 모집글</p>
           <div className={similarList}>
-            {similarPosts.map((p, i) => (
-              <PostCard
-                key={p.id}
-                post={p}
-                compact
-                animationIndex={i}
-                onClick={() => navigate(`/post/${p.id}`)}
-              />
-            ))}
+            <PostCard
+              post={similarPost}
+              compact
+              onClick={() => navigate(`/post/${similarPost.id}`)}
+            />
           </div>
         </div>
       )}
@@ -235,21 +244,34 @@ export function PostDetailPage() {
       <div className={footerSpacer} />
 
       <div className={stickyFooter}>
-        <Button
-          size="lg"
-          fullWidth
-          variant={hasApplied ? 'secondary' : 'primary'}
-          disabled={post.status === 'done' || isMyPost}
-          onClick={() => applyMatch(post)}
-        >
-          {isMyPost
-            ? '내가 올린 글'
-            : hasApplied
-              ? '신청 완료'
-              : post.status === 'done'
-                ? '모집 마감'
-                : '같이 먹을래요'}
-        </Button>
+        {isMyPost && post.status === 'waiting' ? (
+          <div className={stickyFooterActions}>
+            <Button
+              size="lg"
+              variant="secondary"
+              fullWidth
+              onClick={handleClosePost}
+            >
+              모집 마감
+            </Button>
+          </div>
+        ) : (
+          <Button
+            size="lg"
+            fullWidth
+            variant={hasApplied ? 'secondary' : 'primary'}
+            disabled={post.status === 'done' || isMyPost}
+            onClick={() => applyMatch(post)}
+          >
+            {isMyPost
+              ? '내가 올린 글'
+              : hasApplied
+                ? '신청 완료'
+                : post.status === 'done'
+                  ? '모집 마감'
+                  : '같이 먹을래요'}
+          </Button>
+        )}
       </div>
     </div>
   )

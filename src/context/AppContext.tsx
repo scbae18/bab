@@ -196,7 +196,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       ])
       setNextMatchId((id) => id + 1)
       setNextNotifId((id) => id + 1)
-      showToast('매칭 신청 완료! 연락을 기다려봐요')
+      showToast('신청 완료! 호스트가 확인하면 알려드릴게요')
     },
     [matches, profile.nickname, nextMatchId, nextNotifId, showToast],
   )

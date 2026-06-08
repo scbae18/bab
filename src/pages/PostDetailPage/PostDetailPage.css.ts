@@ -188,11 +188,26 @@ export const speechBubbleTail = style({
   borderTop: `8px solid ${colors.primary50}`,
 })
 
+export const guidelineCardCollapsed = style({
+  marginBottom: spacing.sectionGap,
+  borderRadius: radius.md,
+  border: `1px solid ${colors.gray100}`,
+  backgroundColor: colors.white,
+  overflow: 'hidden',
+})
+
+export const guidelineToggle = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+  padding: '14px 16px',
+  color: colors.gray700,
+})
+
 export const guidelineCard = style({
   backgroundColor: colors.gray50,
-  borderRadius: radius.md,
-  padding: '16px',
-  marginBottom: spacing.sectionGap,
+  padding: '0 16px 16px',
 })
 
 export const guidelineTitle = style({
@@ -237,6 +252,12 @@ export const similarList = style({
   display: 'flex',
   flexDirection: 'column',
   gap: spacing.cardGap,
+})
+
+export const stickyFooterActions = style({
+  display: 'flex',
+  gap: '8px',
+  width: '100%',
 })
 
 export const stickyFooter = style({

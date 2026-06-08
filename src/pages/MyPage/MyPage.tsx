@@ -11,7 +11,6 @@ import { useApp } from '../../context/AppContext'
 import { staggerDelay } from '../../utils/animation'
 import { formatRelativeTime } from '../../utils/format'
 import {
-  closeButton,
   list,
   listItemAnimated,
   matchCardInner,
@@ -20,7 +19,7 @@ import {
   matchInfo,
   matchMenu,
   matchTime,
-  myPostActions,
+  pageTitle,
   profileCard,
   profileInfo,
   profileIntro,
@@ -36,12 +35,14 @@ import {
 type MyTab = 'matches' | 'posts'
 
 export function MyPage() {
-  const { profile, matches, myPosts, closePost, showToast } = useApp()
+  const { profile, matches, myPosts } = useApp()
   const navigate = useNavigate()
   const [tab, setTab] = useState<MyTab>('matches')
 
   return (
     <div>
+      <h1 className={pageTitle}>마이</h1>
+
       <div className={profileCard}>
         <Avatar nickname={profile.nickname} size="lg" />
         <div className={profileInfo}>
@@ -72,8 +73,8 @@ export function MyPage() {
       <div className={tabSection}>
         <TabPills
           tabs={[
-            { id: 'matches' as const, label: `신청한 매칭 (${matches.length})` },
-            { id: 'posts' as const, label: `내가 올린 글 (${myPosts.length})` },
+            { id: 'matches' as const, label: `신청 ${matches.length}` },
+            { id: 'posts' as const, label: `작성 ${myPosts.length}` },
           ]}
           active={tab}
           onChange={setTab}
@@ -155,21 +156,6 @@ export function MyPage() {
                 <p className={matchInfo}>
                   신청 {post.currentApplicants}/{post.maxPeople}명
                 </p>
-                {post.status === 'waiting' && (
-                  <div className={myPostActions}>
-                    <button
-                      type="button"
-                      className={closeButton}
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        closePost(post.id)
-                        showToast('모집글이 마감됐어요')
-                      }}
-                    >
-                      모집 마감하기
-                    </button>
-                  </div>
-                )}
               </div>
             </Card>
             </div>

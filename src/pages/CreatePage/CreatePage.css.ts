@@ -133,3 +133,63 @@ export const previewMeta = style({
   color: colors.gray500,
   marginTop: '4px',
 })
+
+export const stepIndicator = style({
+  display: 'flex',
+  gap: '16px',
+  marginBottom: spacing.sectionGap,
+  padding: '12px 0',
+  borderBottom: `1px solid ${colors.gray100}`,
+})
+
+export const stepLabel = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '6px',
+  ...typography.labelSm,
+  color: colors.gray500,
+  flex: 1,
+})
+
+export const stepDot = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '22px',
+  height: '22px',
+  borderRadius: '50%',
+  backgroundColor: colors.gray100,
+  color: colors.gray500,
+  fontSize: '11px',
+  fontWeight: '600',
+  flexShrink: 0,
+})
+
+export const stepDotActive = style({
+  backgroundColor: colors.primary500,
+  color: colors.white,
+})
+
+export const stepDotDone = style({
+  backgroundColor: colors.primary100,
+  color: colors.primary600,
+})
+
+export const navRow = style({
+  display: 'flex',
+  gap: '8px',
+  marginTop: '8px',
+})
+
+export const optionalToggle = style({
+  ...typography.bodyMd,
+  color: colors.primary600,
+  textAlign: 'left',
+  padding: '8px 0',
+})
+
+export const optionalSection = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px',
+})

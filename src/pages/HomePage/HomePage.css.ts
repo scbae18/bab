@@ -18,6 +18,18 @@ export const header = style([
   },
 ])
 
+export const greeting = style({
+  ...typography.labelSm,
+  color: colors.gray500,
+  marginBottom: '2px',
+})
+
+export const greetingName = style({
+  marginLeft: '4px',
+  color: colors.primary600,
+  fontWeight: '600',
+})
+
 export const logo = style({
   ...typography.headingMd,
   color: colors.primary500,
@@ -114,30 +126,13 @@ export const filterSection = style({
   marginBottom: '12px',
 })
 
-export const filterRow = style({
-  display: 'flex',
-  gap: '8px',
-  overflowX: 'auto',
-  marginBottom: '12px',
-  paddingBottom: '4px',
-  '::-webkit-scrollbar': { display: 'none' },
-})
-
-export const sortRow = style({
+export const sortSection = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  gap: '12px',
+  marginTop: '12px',
   marginBottom: '12px',
-})
-
-export const sortSelect = style({
-  ...typography.labelSm,
-  color: colors.gray500,
-  border: 'none',
-  backgroundColor: 'transparent',
-  outline: 'none',
-  cursor: 'pointer',
-  fontFamily: 'inherit',
 })
 
 export const postCount = style({

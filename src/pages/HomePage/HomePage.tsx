@@ -1,18 +1,21 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Chip } from '../../components/Chip/Chip'
+import { EmptyState } from '../../components/EmptyState/EmptyState'
 import { Icon } from '../../components/Icon/Icon'
 import { PostCard } from '../../components/PostCard/PostCard'
 import { SearchBar } from '../../components/SearchBar/SearchBar'
 import { SectionHeader } from '../../components/SectionHeader/SectionHeader'
+import { TabPills } from '../../components/TabPills/TabPills'
 import { useApp } from '../../context/AppContext'
 import { CATEGORIES } from '../../data/mockData'
+import { getMealContext, getTimeGreeting } from '../../utils/greeting'
 import {
   bellBadge,
   bellButton,
-  filterRow,
   filterSection,
   filterSectionAnimated,
+  greeting,
+  greetingName,
   header,
   headerRight,
   location,
@@ -23,8 +26,7 @@ import {
   postList,
   searchSection,
   sectionBlock,
-  sortRow,
-  sortSelect,
+  sortSection,
   statsBanner,
   statsCount,
   statsText,
@@ -32,7 +34,7 @@ import {
 
 const FILTERS = ['전체', ...CATEGORIES] as const
 type Filter = (typeof FILTERS)[number]
-type Sort = 'latest' | 'distance' | 'soon'
+type Sort = 'latest' | 'distance'
 
 export function HomePage() {
   const { posts, profile, unreadCount } = useApp()
@@ -41,15 +43,29 @@ export function HomePage() {
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState<Sort>('latest')
 
-  const waitingCount = posts.filter((p) => p.status === 'waiting').length
-
-  const popularPosts = useMemo(
-    () => posts.filter((p) => p.isPopular && p.status === 'waiting'),
+  const waitingPosts = useMemo(
+    () => posts.filter((p) => p.status === 'waiting'),
     [posts],
   )
 
+  const waitingCount = waitingPosts.length
+
+  const popularPosts = useMemo(
+    () =>
+      waitingPosts
+        .filter((p) => p.isPopular)
+        .sort((a, b) => b.currentApplicants - a.currentApplicants)
+        .slice(0, 3),
+    [waitingPosts],
+  )
+
+  const popularIds = useMemo(
+    () => new Set(popularPosts.map((p) => p.id)),
+    [popularPosts],
+  )
+
   const filteredPosts = useMemo(() => {
-    let result = [...posts]
+    let result = waitingPosts.filter((p) => !popularIds.has(p.id))
 
     if (activeFilter !== '전체') {
       result = result.filter((p) => p.category === activeFilter)
@@ -67,11 +83,8 @@ export function HomePage() {
 
     if (sort === 'distance') {
       result.sort(
-        (a, b) =>
-          parseFloat(a.distance) - parseFloat(b.distance),
+        (a, b) => parseFloat(a.distance) - parseFloat(b.distance),
       )
-    } else if (sort === 'soon') {
-      result.sort((a, b) => a.time.localeCompare(b.time))
     } else {
       result.sort(
         (a, b) =>
@@ -80,12 +93,25 @@ export function HomePage() {
     }
 
     return result
-  }, [posts, activeFilter, search, sort])
+  }, [waitingPosts, popularIds, activeFilter, search, sort])
+
+  const showPopular =
+    popularPosts.length > 0 && !search.trim() && activeFilter === '전체'
+
+  const displayCount = showPopular
+    ? waitingCount
+    : filteredPosts.length
 
   return (
     <div>
       <header className={header}>
-        <h1 className={logo}>밥친구</h1>
+        <div>
+          <p className={greeting}>
+            {getTimeGreeting()}
+            <span className={greetingName}>{profile.nickname}님</span>
+          </p>
+          <h1 className={logo}>밥친구</h1>
+        </div>
         <div className={headerRight}>
           <span className={location}>
             <Icon name="mapPin" size={14} />
@@ -95,7 +121,7 @@ export function HomePage() {
             type="button"
             className={bellButton}
             onClick={() => navigate('/notifications')}
-            aria-label="알림"
+            aria-label={`알림${unreadCount > 0 ? ` ${unreadCount}개` : ''}`}
           >
             <Icon name="bell" size={18} />
             {unreadCount > 0 && <span className={bellBadge} />}
@@ -104,19 +130,22 @@ export function HomePage() {
       </header>
 
       <div className={searchSection}>
-        <SearchBar value={search} onChange={setSearch} />
+        <SearchBar
+          value={search}
+          onChange={setSearch}
+          placeholder="메뉴, 식당, 동네 검색"
+        />
       </div>
 
       <div className={statsBanner}>
         <p className={statsText}>
-          <span className={statsCount}>{waitingCount}건</span>의 모집이 진행 중
+          <span className={statsCount}>{waitingCount}건</span>의 {getMealContext()} 진행 중
         </p>
-        <span className={statsText}>오늘도 맛있는 한 끼</span>
       </div>
 
-      {popularPosts.length > 0 && (
+      {showPopular && (
         <div className={sectionBlock}>
-          <SectionHeader titleText="지금 인기" subtitleText="빠르게 마감될 수 있어요" />
+          <SectionHeader titleText="지금 인기" subtitleText="신청이 빠르게 차는 글이에요" />
           <div className={popularScroll}>
             {popularPosts.map((post, i) => (
               <div key={post.id} className={popularCard}>
@@ -133,37 +162,33 @@ export function HomePage() {
       )}
 
       <div className={`${filterSection} ${filterSectionAnimated}`}>
-        <SectionHeader titleText="모집 둘러보기" />
-        <div className={filterRow}>
-          {FILTERS.map((filter) => (
-            <Chip
-              key={filter}
-              variant={activeFilter === filter ? 'filterActive' : 'filter'}
-              onClick={() => setActiveFilter(filter)}
-            >
-              {filter}
-            </Chip>
-          ))}
-        </div>
-        <div className={sortRow}>
-          <span className={postCount}>{filteredPosts.length}개의 모집글</span>
-          <select
-            className={sortSelect}
-            value={sort}
-            onChange={(e) => setSort(e.target.value as Sort)}
-          >
-            <option value="latest">최신순</option>
-            <option value="distance">가까운 순</option>
-            <option value="soon">곧 만나요</option>
-          </select>
+        <TabPills
+          tabs={FILTERS.map((f) => ({ id: f, label: f }))}
+          active={activeFilter}
+          onChange={setActiveFilter}
+          scrollable
+        />
+        <div className={sortSection}>
+          <span className={postCount}>{displayCount}개의 모집글</span>
+          <TabPills
+            tabs={[
+              { id: 'latest' as const, label: '최신순' },
+              { id: 'distance' as const, label: '가까운 순' },
+            ]}
+            active={sort}
+            onChange={setSort}
+            compact
+          />
         </div>
       </div>
 
       <div className={postList}>
-        {filteredPosts.length === 0 ? (
-          <p className={postCount} style={{ textAlign: 'center', padding: '40px 0' }}>
-            조건에 맞는 모집글이 없어요
-          </p>
+        {filteredPosts.length === 0 && !showPopular ? (
+          <EmptyState
+            icon={<Icon name="search" size={24} />}
+            titleText="조건에 맞는 모집글이 없어요"
+            descriptionText="필터를 바꾸거나 직접 모집글을 올려보세요"
+          />
         ) : (
           filteredPosts.map((post, i) => (
             <PostCard

@@ -2,6 +2,12 @@ import { style } from '@vanilla-extract/css'
 import { fadeInUpItem, scaleInItem } from '../../styles/animations.css'
 import { colors, radius, spacing, typography } from '../../styles/tokens.css'
 
+export const pageTitle = style({
+  ...typography.headingLg,
+  color: colors.gray900,
+  marginBottom: spacing.sectionGap,
+})
+
 export const profileCard = style([
   scaleInItem,
   {

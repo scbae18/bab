@@ -52,10 +52,33 @@ export const formSection = style([
   },
 ])
 
-export const stepLabel = style({
+export const featureList = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '12px',
+  textAlign: 'left',
+  width: '100%',
+  maxWidth: '300px',
+})
+
+export const featureItem = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  color: colors.primary600,
+})
+
+export const featureText = style({
+  ...typography.bodyMd,
+  color: colors.gray700,
+})
+
+export const shuffleButton = style({
   ...typography.labelSm,
-  color: colors.primary500,
-  marginBottom: '4px',
+  color: colors.primary600,
+  marginTop: '8px',
+  textDecoration: 'underline',
+  textUnderlineOffset: '2px',
 })
 
 export const fieldLabel = style({
