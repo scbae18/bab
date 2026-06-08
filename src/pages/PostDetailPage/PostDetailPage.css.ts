@@ -4,13 +4,12 @@ import {
   pageEnter,
   slideUpCentered,
 } from '../../styles/animations.css'
-import { colors, radius, spacing, typography } from '../../styles/tokens.css'
+import { colors, elevation, radius, spacing, typography } from '../../styles/tokens.css'
 
 export const topBar = style({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: spacing.sectionGap,
+  marginBottom: '12px',
 })
 
 export const backButton = style({
@@ -19,85 +18,102 @@ export const backButton = style({
   display: 'inline-flex',
   alignItems: 'center',
   gap: '4px',
-})
-
-export const shareButton = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '36px',
-  height: '36px',
+  padding: '6px 10px',
+  marginLeft: '-10px',
   borderRadius: radius.sm,
-  border: `1px solid ${colors.gray100}`,
-  backgroundColor: colors.white,
-  color: colors.gray500,
-  cursor: 'pointer',
+  fontWeight: '600',
 })
 
-export const titleSection = style({
-  marginBottom: '16px',
+export const heroBanner = style({
+  position: 'relative',
+  borderRadius: radius.lg,
+  padding: '20px',
+  marginBottom: spacing.sectionGap,
+  overflow: 'hidden',
+  minHeight: '120px',
+})
+
+export const heroEmoji = style({
+  position: 'absolute',
+  right: '16px',
+  bottom: '-10px',
+  fontSize: '72px',
+  opacity: 0.2,
+  lineHeight: 1,
+  pointerEvents: 'none',
 })
 
 export const menuTitle = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '12px',
+  position: 'relative',
+  zIndex: 1,
   ...typography.display,
-  color: colors.gray900,
-  marginBottom: '4px',
+  color: colors.white,
+  marginBottom: '6px',
+  textShadow: '0 2px 8px rgba(0,0,0,0.15)',
 })
 
 export const restaurantRow = style({
+  position: 'relative',
+  zIndex: 1,
   display: 'flex',
   alignItems: 'center',
-  gap: '8px',
+  gap: '10px',
+  flexWrap: 'wrap',
 })
 
 export const restaurantName = style({
   ...typography.headingMd,
-  color: colors.primary500,
+  color: 'rgba(255,255,255,0.95)',
 })
 
 export const rating = style({
   display: 'inline-flex',
   alignItems: 'center',
-  gap: '3px',
-  ...typography.bodyMd,
-  color: colors.accent500,
+  gap: '4px',
+  padding: '4px 10px',
+  borderRadius: radius.pill,
+  backgroundColor: 'rgba(255,255,255,0.2)',
+  ...typography.labelSm,
+  color: colors.white,
+  fontWeight: '700',
 })
 
 export const restaurantCard = style({
-  backgroundColor: colors.white,
+  backgroundColor: colors.surface,
   border: `1px solid ${colors.gray100}`,
-  borderRadius: radius.md,
+  borderRadius: radius.lg,
   padding: '16px',
   marginBottom: spacing.sectionGap,
+  boxShadow: elevation.card,
 })
 
 export const restaurantAddress = style({
   ...typography.bodyMd,
   color: colors.gray500,
   marginTop: '4px',
+  lineHeight: '150%',
 })
 
 export const minOrderBadge = style({
   display: 'inline-flex',
-  marginTop: '10px',
-  padding: '6px 10px',
-  borderRadius: radius.sm,
+  marginTop: '12px',
+  padding: '6px 12px',
+  borderRadius: radius.pill,
   backgroundColor: colors.accent50,
   ...typography.labelSm,
   color: colors.accent500,
+  fontWeight: '700',
 })
 
 export const hostCard = style({
   display: 'flex',
   gap: '14px',
-  backgroundColor: colors.white,
+  backgroundColor: colors.surface,
   border: `1px solid ${colors.gray100}`,
-  borderRadius: radius.md,
-  padding: '16px',
+  borderRadius: radius.lg,
+  padding: '18px',
   marginBottom: spacing.sectionGap,
+  boxShadow: elevation.card,
 })
 
 export const hostInfo = style({
@@ -107,6 +123,7 @@ export const hostInfo = style({
 export const hostName = style({
   ...typography.titleMd,
   color: colors.gray900,
+  fontWeight: '700',
 })
 
 export const hostIntro = style({
@@ -118,7 +135,7 @@ export const hostIntro = style({
 export const hostStats = style({
   display: 'flex',
   gap: '12px',
-  marginTop: '8px',
+  marginTop: '10px',
 })
 
 export const hostStat = style({
@@ -128,7 +145,7 @@ export const hostStat = style({
 
 export const hostStatValue = style({
   color: colors.primary500,
-  fontWeight: '600',
+  fontWeight: '700',
 })
 
 export const infoGrid = style({
@@ -139,21 +156,24 @@ export const infoGrid = style({
 })
 
 export const infoBox = style({
-  backgroundColor: colors.white,
+  backgroundColor: colors.surface,
   border: `1px solid ${colors.gray100}`,
   borderRadius: radius.md,
   padding: '14px',
+  boxShadow: elevation.card,
 })
 
 export const infoBoxLabel = style({
   ...typography.labelSm,
   color: colors.gray500,
-  marginBottom: '4px',
+  marginBottom: '6px',
+  fontWeight: '600',
 })
 
 export const infoBoxValue = style({
   ...typography.titleMd,
   color: colors.gray900,
+  fontWeight: '700',
 })
 
 export const tagRow = style({
@@ -165,35 +185,31 @@ export const tagRow = style({
 
 export const speechBubble = style({
   position: 'relative',
-  backgroundColor: colors.primary50,
-  borderRadius: radius.md,
+  backgroundColor: colors.surface,
+  borderRadius: radius.lg,
   padding: spacing.contentPadding,
   marginBottom: spacing.sectionGap,
+  border: `1px solid ${colors.primary100}`,
+  boxShadow: elevation.card,
 })
 
 export const speechBubbleText = style({
   ...typography.bodyLg,
   color: colors.gray700,
-  lineHeight: typography.lineHeight,
+  lineHeight: '160%',
 })
 
 export const speechBubbleTail = style({
-  position: 'absolute',
-  bottom: '-8px',
-  left: '24px',
-  width: 0,
-  height: 0,
-  borderLeft: '8px solid transparent',
-  borderRight: '8px solid transparent',
-  borderTop: `8px solid ${colors.primary50}`,
+  display: 'none',
 })
 
 export const guidelineCardCollapsed = style({
   marginBottom: spacing.sectionGap,
-  borderRadius: radius.md,
+  borderRadius: radius.lg,
   border: `1px solid ${colors.gray100}`,
-  backgroundColor: colors.white,
+  backgroundColor: colors.surface,
   overflow: 'hidden',
+  boxShadow: elevation.card,
 })
 
 export const guidelineToggle = style({
@@ -201,7 +217,7 @@ export const guidelineToggle = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
-  padding: '14px 16px',
+  padding: '16px',
   color: colors.gray700,
 })
 
@@ -217,6 +233,7 @@ export const guidelineTitle = style({
   ...typography.titleSm,
   color: colors.gray700,
   marginBottom: '8px',
+  fontWeight: '700',
 })
 
 export const guidelineList = style({
@@ -229,8 +246,12 @@ export const guidelineList = style({
 export const applicantsRow = style({
   display: 'flex',
   alignItems: 'center',
-  gap: '8px',
+  gap: '10px',
   marginBottom: spacing.sectionGap,
+  padding: '14px 16px',
+  backgroundColor: colors.primary50,
+  borderRadius: radius.lg,
+  border: `1px solid ${colors.primary100}`,
 })
 
 export const applicantAvatars = style({
@@ -239,7 +260,8 @@ export const applicantAvatars = style({
 
 export const applicantText = style({
   ...typography.bodyMd,
-  color: colors.gray500,
+  color: colors.primary700,
+  fontWeight: '600',
 })
 
 export const similarSection = style({
@@ -264,21 +286,24 @@ export const stickyFooter = style({
   position: 'fixed',
   bottom: 0,
   left: '50%',
+  transform: 'translateX(-50%)',
   width: '100%',
   maxWidth: '430px',
   padding: '12px 20px',
   paddingBottom: 'calc(12px + env(safe-area-inset-bottom, 0px))',
-  backgroundColor: colors.white,
+  backgroundColor: 'rgba(255, 255, 255, 0.94)',
+  backdropFilter: 'blur(12px)',
+  WebkitBackdropFilter: 'blur(12px)',
   borderTop: `1px solid ${colors.gray100}`,
   zIndex: 50,
-  boxShadow: '0 -4px 20px rgba(0,0,0,0.06)',
+  boxShadow: elevation.tabBar,
   animation: `${slideUpCentered} 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards`,
 })
 
 export const animateSection = style([fadeInUpItem])
 
 export const footerSpacer = style({
-  height: '80px',
+  height: '88px',
 })
 
 export const notFound = style({
@@ -293,5 +318,7 @@ export const detailMain = style([
   {
     padding: spacing.contentPadding,
     minHeight: '100vh',
+    position: 'relative',
+    zIndex: 1,
   },
 ])

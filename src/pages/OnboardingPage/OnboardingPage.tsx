@@ -3,22 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/Button/Button'
 import { Chip } from '../../components/Chip/Chip'
 import { Icon } from '../../components/Icon/Icon'
+import { Logo } from '../../components/Logo/Logo'
 import { Input } from '../../components/Input/Input'
 import { useApp } from '../../context/AppContext'
 import { generateNickname } from '../../data/mockData'
 import { NEIGHBORHOODS } from '../../data/restaurants'
 import {
   description,
+  featureIcon,
   featureItem,
   featureList,
   featureText,
   fieldLabel,
   formSection,
   heroSection,
+  logoWrap,
   neighborhoodGrid,
   page,
   shuffleButton,
-  title,
 } from './OnboardingPage.css'
 
 const FEATURES = [
@@ -51,7 +53,9 @@ export function OnboardingPage() {
   return (
     <div className={page}>
       <div className={heroSection}>
-        <h1 className={title}>밥친구</h1>
+        <div className={logoWrap}>
+          <Logo />
+        </div>
         <p className={description}>
           혼자 가기 애매한 식당,
           <br />
@@ -61,7 +65,9 @@ export function OnboardingPage() {
         <ul className={featureList}>
           {FEATURES.map(({ icon, text }) => (
             <li key={text} className={featureItem}>
-              <Icon name={icon} size={18} />
+              <span className={featureIcon}>
+                <Icon name={icon} size={18} />
+              </span>
               <span className={featureText}>{text}</span>
             </li>
           ))}

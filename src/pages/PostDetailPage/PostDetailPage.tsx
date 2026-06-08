@@ -2,12 +2,12 @@ import { useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Avatar } from '../../components/Avatar/Avatar'
 import { Button } from '../../components/Button/Button'
-import { CategoryIcon } from '../../components/CategoryIcon/CategoryIcon'
 import { Icon } from '../../components/Icon/Icon'
 import { PostCard } from '../../components/PostCard/PostCard'
 import { Tag } from '../../components/Tag/Tag'
 import { useApp } from '../../context/AppContext'
 import { staggerDelay } from '../../utils/animation'
+import { getCategoryTheme } from '../../utils/categoryTheme'
 import { formatBudget } from '../../utils/format'
 import {
   animateSection,
@@ -21,6 +21,8 @@ import {
   guidelineList,
   guidelineTitle,
   guidelineToggle,
+  heroBanner,
+  heroEmoji,
   hostCard,
   hostInfo,
   hostIntro,
@@ -43,12 +45,10 @@ import {
   similarList,
   similarSection,
   speechBubble,
-  speechBubbleTail,
   speechBubbleText,
   stickyFooter,
   stickyFooterActions,
   tagRow,
-  titleSection,
   topBar,
 } from './PostDetailPage.css'
 
@@ -73,6 +73,8 @@ export function PostDetailPage() {
       ) ?? null
     )
   }, [posts, post])
+
+  const theme = post ? getCategoryTheme(post.category) : null
 
   if (!post) {
     return (
@@ -102,13 +104,16 @@ export function PostDetailPage() {
       </div>
 
       <div
-        className={`${titleSection} ${animateSection}`}
-        style={{ animationDelay: staggerDelay(0) }}
+        className={`${heroBanner} ${animateSection}`}
+        style={{
+          animationDelay: staggerDelay(0),
+          background: theme?.gradient,
+        }}
       >
-        <h1 className={menuTitle}>
-          <CategoryIcon category={post.category} size="lg" />
-          {post.menu}
-        </h1>
+        <span className={heroEmoji} aria-hidden>
+          {theme?.emoji}
+        </span>
+        <h1 className={menuTitle}>{post.menu}</h1>
         <div className={restaurantRow}>
           <p className={restaurantName}>{post.restaurant}</p>
           <span className={rating}>
@@ -185,7 +190,6 @@ export function PostDetailPage() {
           style={{ animationDelay: staggerDelay(4) }}
         >
           <p className={speechBubbleText}>{post.comment}</p>
-          <div className={speechBubbleTail} />
         </div>
       )}
 

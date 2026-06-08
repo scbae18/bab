@@ -4,11 +4,7 @@ import { colors, elevation, radius, typography } from '../../styles/tokens.css'
 const toastIn = keyframes({
   '0%': {
     opacity: 0,
-    transform: 'translateX(-50%) translateY(-20px) scale(0.9)',
-  },
-  '60%': {
-    opacity: 1,
-    transform: 'translateX(-50%) translateY(4px) scale(1.02)',
+    transform: 'translateX(-50%) translateY(-16px) scale(0.95)',
   },
   '100%': {
     opacity: 1,
@@ -18,18 +14,18 @@ const toastIn = keyframes({
 
 export const toast = style({
   position: 'fixed',
-  top: '20px',
+  top: 'calc(16px + env(safe-area-inset-top, 0px))',
   left: '50%',
   transform: 'translateX(-50%)',
   zIndex: 1000,
   backgroundColor: colors.gray900,
   color: colors.white,
-  borderRadius: radius.md,
-  padding: '12px 20px',
+  borderRadius: radius.pill,
+  padding: '12px 22px',
   fontSize: typography.bodyMd.fontSize,
-  fontWeight: typography.bodyMd.fontWeight,
+  fontWeight: '600',
   boxShadow: elevation.toast,
-  animation: `${toastIn} 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards`,
+  animation: `${toastIn} 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards`,
   maxWidth: 'calc(430px - 40px)',
   textAlign: 'center',
 })

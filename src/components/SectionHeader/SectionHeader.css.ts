@@ -3,14 +3,15 @@ import { colors, typography } from '../../styles/tokens.css'
 
 export const sectionHeader = style({
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-end',
   justifyContent: 'space-between',
-  marginBottom: '12px',
+  marginBottom: '14px',
 })
 
 export const title = style({
   ...typography.titleMd,
   color: colors.gray900,
+  fontWeight: '700',
 })
 
 export const action = style({
@@ -20,10 +21,11 @@ export const action = style({
   background: 'none',
   border: 'none',
   fontFamily: 'inherit',
+  fontWeight: '600',
 })
 
 export const subtitle = style({
   ...typography.labelSm,
   color: colors.gray500,
-  marginTop: '2px',
+  marginTop: '3px',
 })

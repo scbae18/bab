@@ -1,10 +1,11 @@
 import { style } from '@vanilla-extract/css'
-import { colors, radius, spacing, typography } from '../../styles/tokens.css'
+import { colors, elevation, radius, spacing, typography } from '../../styles/tokens.css'
 
 export const pageTitle = style({
   ...typography.headingLg,
   color: colors.gray900,
   marginBottom: '4px',
+  fontWeight: '800',
 })
 
 export const pageSubtitle = style({
@@ -111,10 +112,11 @@ export const helperText = style({
 })
 
 export const previewCard = style({
-  backgroundColor: colors.primary50,
-  borderRadius: radius.md,
-  padding: '16px',
+  background: `linear-gradient(135deg, ${colors.primary50} 0%, ${colors.surface} 100%)`,
+  borderRadius: radius.lg,
+  padding: '18px',
   border: `1px solid ${colors.primary100}`,
+  boxShadow: elevation.card,
 })
 
 export const previewLabel = style({
@@ -136,10 +138,13 @@ export const previewMeta = style({
 
 export const stepIndicator = style({
   display: 'flex',
-  gap: '16px',
+  gap: '8px',
   marginBottom: spacing.sectionGap,
-  padding: '12px 0',
-  borderBottom: `1px solid ${colors.gray100}`,
+  padding: '14px 16px',
+  borderRadius: radius.lg,
+  backgroundColor: colors.surface,
+  border: `1px solid ${colors.gray100}`,
+  boxShadow: elevation.card,
 })
 
 export const stepLabel = style({

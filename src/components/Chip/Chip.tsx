@@ -10,6 +10,7 @@ type ChipVariant =
   | 'filterActive'
   | 'category'
   | 'categoryActive'
+  | 'onDark'
 
 interface ChipProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: ChipVariant

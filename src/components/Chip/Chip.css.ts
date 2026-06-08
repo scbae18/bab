@@ -20,7 +20,9 @@ export const chipRecipe = recipe({
     variant: {
       waiting: {
         backgroundColor: colors.primary50,
-        color: colors.primary500,
+        color: colors.primary600,
+        fontWeight: '700',
+        border: `1px solid ${colors.primary100}`,
       },
       done: {
         backgroundColor: colors.gray50,
@@ -59,6 +61,12 @@ export const chipRecipe = recipe({
         border: `1px solid ${colors.primary200}`,
         cursor: 'pointer',
         transform: 'scale(1.02)',
+      },
+      onDark: {
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        color: colors.primary600,
+        fontWeight: '700',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
       },
     },
   },

@@ -1,60 +1,47 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { Icon } from '../Icon/Icon'
 import type { IconName } from '../Icon/Icon'
 import {
   tabActive,
   tabBar,
   tabIconActive,
+  tabIconFab,
   tabIconWrap,
   tabInactive,
-  tabIndicator,
   tabItem,
+  tabItemFab,
   tabLabel,
+  tabLabelFab,
 } from './TabBar.css'
 
-const TABS: { to: string; label: string; icon: IconName }[] = [
+const TABS: { to: string; label: string; icon: IconName; fab?: boolean }[] = [
   { to: '/', label: '홈', icon: 'home' },
-  { to: '/create', label: '글쓰기', icon: 'pen' },
+  { to: '/create', label: '글쓰기', icon: 'pen', fab: true },
   { to: '/my', label: '마이', icon: 'user' },
 ]
 
 export function TabBar() {
-  const location = useLocation()
-  const activeIndex = TABS.findIndex(
-    (t) =>
-      t.to === '/'
-        ? location.pathname === '/'
-        : location.pathname.startsWith(t.to),
-  )
-
-  const indicatorLeft =
-    activeIndex >= 0
-      ? `calc(${(activeIndex + 0.5) * (100 / TABS.length)}% - 16px)`
-      : '0'
-
   return (
-    <nav className={tabBar}>
-      <div
-        className={tabIndicator}
-        style={{ left: indicatorLeft, opacity: activeIndex >= 0 ? 1 : 0 }}
-      />
-      {TABS.map(({ to, label, icon }) => (
+    <nav className={tabBar} aria-label="메인 메뉴">
+      {TABS.map(({ to, label, icon, fab }) => (
         <NavLink
           key={to}
           to={to}
           className={({ isActive }) =>
-            `${tabItem} ${isActive ? tabActive : tabInactive}`
+            `${tabItem}${fab ? ` ${tabItemFab}` : ''} ${isActive ? tabActive : tabInactive}`
           }
           end={to === '/'}
         >
           {({ isActive }) => (
             <>
               <span
-                className={`${tabIconWrap}${isActive ? ` ${tabIconActive}` : ''}`}
+                className={`${tabIconWrap}${fab ? ` ${tabIconFab}` : ''}${isActive && !fab ? ` ${tabIconActive}` : ''}`}
               >
-                <Icon name={icon} size={22} />
+                <Icon name={icon} size={fab ? 24 : 22} />
               </span>
-              <span className={tabLabel}>{label}</span>
+              <span className={`${tabLabel}${fab ? ` ${tabLabelFab}` : ''}`}>
+                {label}
+              </span>
             </>
           )}
         </NavLink>

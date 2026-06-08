@@ -13,21 +13,22 @@ export const label = style({
 })
 
 export const input = style({
-  height: '48px',
-  padding: '10px 16px',
-  borderRadius: radius.sm,
+  height: '50px',
+  padding: '12px 16px',
+  borderRadius: radius.md,
   border: `1px solid ${colors.gray100}`,
-  backgroundColor: colors.white,
+  backgroundColor: colors.surface,
   fontSize: typography.bodyMd.fontSize,
   fontWeight: typography.bodyMd.fontWeight,
-  color: colors.gray700,
+  color: colors.gray900,
   outline: 'none',
-  transition: 'border-color 0.15s ease',
+  transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
   '::placeholder': {
     color: colors.gray300,
   },
   ':focus': {
-    borderColor: colors.primary500,
+    borderColor: colors.primary400,
+    boxShadow: `0 0 0 3px ${colors.primary50}`,
   },
 })
 
@@ -35,7 +36,7 @@ export const textarea = style([
   input,
   {
     height: 'auto',
-    minHeight: '96px',
+    minHeight: '100px',
     resize: 'vertical',
     lineHeight: typography.lineHeight,
   },

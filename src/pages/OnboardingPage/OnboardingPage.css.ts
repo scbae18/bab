@@ -1,13 +1,37 @@
 import { style } from '@vanilla-extract/css'
 import { fadeInUpItem, scaleInItem } from '../../styles/animations.css'
-import { colors, spacing, typography } from '../../styles/tokens.css'
+import { colors, elevation, gradients, radius, spacing, typography } from '../../styles/tokens.css'
 
 export const page = style({
   minHeight: '100vh',
   display: 'flex',
   flexDirection: 'column',
   padding: spacing.contentPadding,
-  backgroundColor: colors.background,
+  background: gradients.hero,
+  position: 'relative',
+  overflow: 'hidden',
+  '::before': {
+    content: '""',
+    position: 'absolute',
+    top: '-60px',
+    right: '-40px',
+    width: '180px',
+    height: '180px',
+    borderRadius: '50%',
+    background: 'rgba(249, 115, 22, 0.12)',
+    pointerEvents: 'none',
+  },
+  '::after': {
+    content: '""',
+    position: 'absolute',
+    bottom: '120px',
+    left: '-50px',
+    width: '140px',
+    height: '140px',
+    borderRadius: '50%',
+    background: 'rgba(234, 179, 8, 0.1)',
+    pointerEvents: 'none',
+  },
 })
 
 export const heroSection = style({
@@ -18,14 +42,14 @@ export const heroSection = style({
   alignItems: 'center',
   textAlign: 'center',
   gap: spacing.sectionGap,
-  paddingTop: '40px',
+  paddingTop: '48px',
+  position: 'relative',
+  zIndex: 1,
 })
 
-export const title = style([
+export const logoWrap = style([
   scaleInItem,
   {
-    ...typography.display,
-    color: colors.primary500,
     animationDelay: '0.05s',
   },
 ])
@@ -35,11 +59,50 @@ export const description = style([
   {
     ...typography.bodyLg,
     color: colors.gray500,
-    lineHeight: typography.lineHeight,
+    lineHeight: '160%',
     maxWidth: '280px',
-    animationDelay: '0.2s',
+    animationDelay: '0.15s',
   },
 ])
+
+export const featureList = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+  textAlign: 'left',
+  width: '100%',
+  maxWidth: '320px',
+  backgroundColor: colors.surface,
+  borderRadius: radius.lg,
+  padding: '16px',
+  boxShadow: elevation.card,
+  border: `1px solid ${colors.gray100}`,
+})
+
+export const featureItem = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '12px',
+  padding: '4px 0',
+})
+
+export const featureIcon = style({
+  width: '36px',
+  height: '36px',
+  borderRadius: radius.sm,
+  backgroundColor: colors.primary50,
+  color: colors.primary500,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexShrink: 0,
+})
+
+export const featureText = style({
+  ...typography.bodyMd,
+  color: colors.gray700,
+  lineHeight: '145%',
+})
 
 export const formSection = style([
   fadeInUpItem,
@@ -48,37 +111,17 @@ export const formSection = style([
     flexDirection: 'column',
     gap: spacing.sectionGap,
     paddingBottom: '32px',
-    animationDelay: '0.3s',
+    animationDelay: '0.25s',
+    position: 'relative',
+    zIndex: 1,
   },
 ])
-
-export const featureList = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
-  textAlign: 'left',
-  width: '100%',
-  maxWidth: '300px',
-})
-
-export const featureItem = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  color: colors.primary600,
-})
-
-export const featureText = style({
-  ...typography.bodyMd,
-  color: colors.gray700,
-})
 
 export const shuffleButton = style({
   ...typography.labelSm,
   color: colors.primary600,
   marginTop: '8px',
-  textDecoration: 'underline',
-  textUnderlineOffset: '2px',
+  fontWeight: '600',
 })
 
 export const fieldLabel = style({
@@ -86,6 +129,7 @@ export const fieldLabel = style({
   color: colors.gray900,
   display: 'block',
   marginBottom: '8px',
+  fontWeight: '700',
 })
 
 export const neighborhoodGrid = style({

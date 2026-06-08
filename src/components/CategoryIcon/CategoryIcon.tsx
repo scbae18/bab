@@ -1,6 +1,6 @@
 import type { Category } from '../../data/mockData'
 import { Icon } from '../Icon/Icon'
-import { categoryIcon, categoryIconLg } from './CategoryIcon.css'
+import { categoryIconRecipe } from './CategoryIcon.css'
 
 const CATEGORY_ICON: Record<Category, 'meat' | 'intestine' | 'chicken' | 'other'> = {
   고기: 'meat',
@@ -15,9 +15,9 @@ interface CategoryIconProps {
 }
 
 export function CategoryIcon({ category, size = 'md' }: CategoryIconProps) {
-  const iconSize = size === 'lg' ? 22 : 16
+  const iconSize = size === 'lg' ? 24 : 18
   return (
-    <span className={`${categoryIcon}${size === 'lg' ? ` ${categoryIconLg}` : ''}`}>
+    <span className={categoryIconRecipe({ category, size })}>
       <Icon name={CATEGORY_ICON[category]} size={iconSize} />
     </span>
   )

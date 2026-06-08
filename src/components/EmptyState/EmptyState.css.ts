@@ -1,33 +1,35 @@
 import { style } from '@vanilla-extract/css'
-import { colors, typography } from '../../styles/tokens.css'
+import { colors, radius, typography } from '../../styles/tokens.css'
 
 export const emptyState = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   textAlign: 'center',
-  padding: '48px 20px',
-  gap: '8px',
+  padding: '56px 24px',
+  gap: '10px',
 })
 
 export const iconWrap = style({
-  width: '56px',
-  height: '56px',
-  borderRadius: '50%',
-  backgroundColor: colors.primary50,
+  width: '64px',
+  height: '64px',
+  borderRadius: radius.lg,
+  background: `linear-gradient(135deg, ${colors.primary50} 0%, ${colors.primary100} 100%)`,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: colors.primary400,
-  marginBottom: '8px',
+  color: colors.primary500,
+  marginBottom: '4px',
 })
 
 export const title = style({
   ...typography.titleMd,
-  color: colors.gray700,
+  color: colors.gray900,
 })
 
 export const description = style({
   ...typography.bodyMd,
   color: colors.gray500,
+  maxWidth: '240px',
+  lineHeight: '150%',
 })

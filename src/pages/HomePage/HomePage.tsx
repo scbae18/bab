@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { EmptyState } from '../../components/EmptyState/EmptyState'
 import { Icon } from '../../components/Icon/Icon'
+import { Logo } from '../../components/Logo/Logo'
 import { PostCard } from '../../components/PostCard/PostCard'
 import { SearchBar } from '../../components/SearchBar/SearchBar'
 import { SectionHeader } from '../../components/SectionHeader/SectionHeader'
@@ -19,8 +20,8 @@ import {
   header,
   headerRight,
   location,
-  logo,
   popularCard,
+  statsIcon,
   popularScroll,
   postCount,
   postList,
@@ -110,7 +111,7 @@ export function HomePage() {
             {getTimeGreeting()}
             <span className={greetingName}>{profile.nickname}님</span>
           </p>
-          <h1 className={logo}>밥친구</h1>
+          <Logo />
         </div>
         <div className={headerRight}>
           <span className={location}>
@@ -138,8 +139,12 @@ export function HomePage() {
       </div>
 
       <div className={statsBanner}>
+        <span className={statsIcon} aria-hidden>
+          🍚
+        </span>
         <p className={statsText}>
-          <span className={statsCount}>{waitingCount}건</span>의 {getMealContext()} 진행 중
+          지금 <span className={statsCount}>{waitingCount}건</span>의{' '}
+          {getMealContext()}이 열려 있어요
         </p>
       </div>
 

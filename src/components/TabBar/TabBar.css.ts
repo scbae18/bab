@@ -1,9 +1,9 @@
 import { keyframes, style } from '@vanilla-extract/css'
-import { colors, spacing, typography } from '../../styles/tokens.css'
+import { colors, elevation, gradients, radius, spacing, typography } from '../../styles/tokens.css'
 
 const tabPop = keyframes({
   '0%': { transform: 'scale(1)' },
-  '40%': { transform: 'scale(1.15)' },
+  '40%': { transform: 'scale(1.12)' },
   '100%': { transform: 'scale(1)' },
 })
 
@@ -16,10 +16,16 @@ export const tabBar = style({
   maxWidth: '430px',
   height: `calc(${spacing.tabBarHeight} + env(safe-area-inset-bottom, 0px))`,
   paddingBottom: 'env(safe-area-inset-bottom, 0px)',
-  backgroundColor: colors.white,
-  borderTop: `1px solid ${colors.primary100}`,
+  paddingLeft: '12px',
+  paddingRight: '12px',
+  paddingTop: '8px',
+  backgroundColor: 'rgba(255, 255, 255, 0.92)',
+  backdropFilter: 'blur(16px)',
+  WebkitBackdropFilter: 'blur(16px)',
+  borderTop: `1px solid ${colors.gray100}`,
+  boxShadow: elevation.tabBar,
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   justifyContent: 'space-around',
   zIndex: 100,
 })
@@ -29,21 +35,36 @@ export const tabItem = style({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: '4px',
+  gap: '3px',
   flex: 1,
-  height: '100%',
+  minHeight: '52px',
   textDecoration: 'none',
   transition: 'color 0.2s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1)',
   ':active': {
-    transform: 'scale(0.92)',
+    transform: 'scale(0.94)',
   },
+})
+
+export const tabItemFab = style({
+  marginTop: '-18px',
 })
 
 export const tabIconWrap = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  width: '28px',
+  height: '28px',
   transition: 'transform 0.25s cubic-bezier(0.22, 1, 0.36, 1)',
+})
+
+export const tabIconFab = style({
+  width: '52px',
+  height: '52px',
+  borderRadius: radius.pill,
+  background: gradients.primary,
+  color: colors.white,
+  boxShadow: elevation.fab,
 })
 
 export const tabIconActive = style({
@@ -52,8 +73,13 @@ export const tabIconActive = style({
 
 export const tabLabel = style({
   fontSize: typography.labelSm.fontSize,
-  fontWeight: typography.labelSm.fontWeight,
+  fontWeight: '600',
   transition: 'color 0.2s ease',
+})
+
+export const tabLabelFab = style({
+  color: colors.primary600,
+  fontWeight: '700',
 })
 
 export const tabActive = style({
@@ -62,14 +88,4 @@ export const tabActive = style({
 
 export const tabInactive = style({
   color: colors.gray300,
-})
-
-export const tabIndicator = style({
-  position: 'absolute',
-  top: 0,
-  width: '32px',
-  height: '3px',
-  borderRadius: '0 0 3px 3px',
-  backgroundColor: colors.primary500,
-  transition: 'left 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease',
 })

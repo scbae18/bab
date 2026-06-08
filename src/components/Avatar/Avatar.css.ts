@@ -7,10 +7,11 @@ export const avatarRecipe = recipe({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '50%',
-    fontWeight: '600',
+    fontWeight: '700',
     flexShrink: 0,
-    color: colors.primary600,
-    backgroundColor: colors.primary100,
+    color: colors.white,
+    border: `2px solid ${colors.white}`,
+    boxShadow: '0 2px 8px rgba(28, 28, 26, 0.12)',
   },
   variants: {
     size: {
@@ -18,6 +19,7 @@ export const avatarRecipe = recipe({
         width: '28px',
         height: '28px',
         fontSize: typography.labelSm.fontSize,
+        borderWidth: '1.5px',
       },
       md: {
         width: '40px',

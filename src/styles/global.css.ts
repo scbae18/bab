@@ -15,10 +15,11 @@ globalStyle('body', {
   fontFamily: typography.fontFamily,
   lineHeight: typography.lineHeight,
   letterSpacing: typography.letterSpacing,
-  backgroundColor: colors.gray50,
+  backgroundColor: '#EDECE8',
   color: colors.gray700,
   WebkitFontSmoothing: 'antialiased',
-  WebkitTapHighlightColor: 'rgba(249, 115, 22, 0.12)',
+  MozOsxFontSmoothing: 'grayscale',
+  WebkitTapHighlightColor: 'rgba(249, 115, 22, 0.1)',
   overscrollBehavior: 'none',
 })
 
@@ -30,7 +31,7 @@ globalStyle('button', {
   touchAction: 'manipulation',
 })
 
-globalStyle('input, textarea', {
+globalStyle('input, textarea, select', {
   fontFamily: 'inherit',
 })
 
