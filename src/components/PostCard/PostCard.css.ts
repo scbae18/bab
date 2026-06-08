@@ -6,12 +6,18 @@ export const cardWrapper = style([fadeInUpItem])
 
 export const cover = style({
   position: 'relative',
-  height: '72px',
+  minHeight: '72px',
   padding: '14px 16px',
+  paddingRight: '88px',
   display: 'flex',
   alignItems: 'flex-start',
-  justifyContent: 'space-between',
   overflow: 'hidden',
+})
+
+export const coverCompact = style({
+  minHeight: '68px',
+  padding: '12px 14px',
+  paddingRight: '80px',
 })
 
 export const coverEmoji = style({
@@ -31,10 +37,9 @@ export const coverMenu = style({
   ...typography.headingSm,
   color: colors.white,
   textShadow: '0 1px 4px rgba(0,0,0,0.15)',
-  maxWidth: '70%',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
+  lineHeight: '1.35',
+  wordBreak: 'keep-all',
+  overflowWrap: 'break-word',
 })
 
 export const coverRestaurant = style({
@@ -42,18 +47,24 @@ export const coverRestaurant = style({
   zIndex: 1,
   ...typography.labelSm,
   color: 'rgba(255,255,255,0.9)',
-  marginTop: '2px',
+  marginTop: '4px',
+  lineHeight: '1.4',
+  wordBreak: 'keep-all',
+  overflowWrap: 'break-word',
 })
 
 export const coverInfo = style({
   position: 'relative',
   zIndex: 1,
-  minWidth: 0,
+  flex: 1,
+  width: '100%',
 })
 
 export const statusChip = style({
-  position: 'relative',
-  zIndex: 1,
+  position: 'absolute',
+  top: '12px',
+  right: '12px',
+  zIndex: 2,
   flexShrink: 0,
 })
 

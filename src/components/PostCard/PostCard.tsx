@@ -14,6 +14,7 @@ import {
   cardBody,
   cardWrapper,
   cover,
+  coverCompact,
   coverEmoji,
   coverInfo,
   coverMenu,
@@ -55,24 +56,21 @@ export function PostCard({
     >
       <Card onClick={onClick} flush>
         <div
-          className={cover}
-          style={{
-            background: theme.gradient,
-            height: compact ? '64px' : '72px',
-          }}
+          className={`${cover}${compact ? ` ${coverCompact}` : ''}`}
+          style={{ background: theme.gradient }}
         >
           <span className={coverEmoji} aria-hidden>
             {theme.emoji}
           </span>
-          <div className={coverInfo}>
-            <p className={coverMenu}>{post.menu}</p>
-            <p className={coverRestaurant}>{post.restaurant}</p>
-          </div>
           <span className={statusChip}>
             <Chip variant="onDark">
               {post.status === 'waiting' ? '모집중' : '마감'}
             </Chip>
           </span>
+          <div className={coverInfo}>
+            <p className={coverMenu}>{post.menu}</p>
+            <p className={coverRestaurant}>{post.restaurant}</p>
+          </div>
         </div>
 
         <div className={cardBody}>
